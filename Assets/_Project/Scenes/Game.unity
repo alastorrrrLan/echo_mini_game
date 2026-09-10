@@ -879,6 +879,7 @@ GameObject:
   - component: {fileID: 1489693551}
   - component: {fileID: 1489693550}
   - component: {fileID: 1489693552}
+  - component: {fileID: 1489693553}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -943,6 +944,21 @@ MonoBehaviour:
   gravity: -20
   mouseSensitivity: 2
   cameraTransform: {fileID: 435609098}
+--- !u!114 &1489693553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489693549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef83f1d3b4cd47979bec9b5caa5ed05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoController
+  maxRadius: 20
+  pulseSpeed: 12
+  cooldown: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
