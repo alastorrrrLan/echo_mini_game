@@ -1129,6 +1129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef83f1d3b4cd47979bec9b5caa5ed05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoController
+  echoSound: {fileID: 1489693554}
   maxRadius: 20
   pulseSpeed: 12
   cooldown: 1
