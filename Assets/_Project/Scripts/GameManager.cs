@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (exitDoor != null)
         {
-            exitDoor.SetActive(false);
+            exitDoor.GetComponent<ExitDoor>().Unlock();
         }
     }
 

@@ -3,14 +3,13 @@ using UnityEngine;
 public class EchoController : MonoBehaviour
 {
     [Header("Audio")]
-    public AudioSource echoSound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip echoClip;
 
     [Header("Echo Settings")]
     public float maxRadius = 20f;
     public float pulseSpeed = 12f;
     public float cooldown = 1f;
-
-
 
     private float currentRadius = 0f;
     private bool isPulsing = false;
@@ -42,7 +41,7 @@ public class EchoController : MonoBehaviour
         currentRadius = 0f;
         lastPulseTime = Time.time;
         
-        echoSound?.Play();
+        audioSource.PlayOneShot(echoClip);
     }
 
     void UpdatePulse()
