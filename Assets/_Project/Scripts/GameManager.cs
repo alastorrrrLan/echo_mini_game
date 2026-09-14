@@ -12,25 +12,78 @@ public class GameManager : MonoBehaviour
 
     [Header("Exit")]
     public GameObject exitDoor;
+    public GameObject exitTrigger;
 
-    [Header("Game Over")]
-    [SerializeField] private GameObject gameOverPanel;
+    [Header("GamePlay")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private EchoController echoController;
+    [SerializeField] private EnemyController enemyController;
+
+    [Header("UI")]
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject startPanel;
+    [SerializeField] private GameObject gameOverPanel;
 
     private bool gameOver = false;
+
+    private bool hasWon = false;
+
+    private static bool skipMainMenu = false;
 
     private void Awake()
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        if (skipMainMenu)
+        {
+            skipMainMenu = false;
+            StartGame();
+        }
+        else
+        {
+            ShowMainMenu();
+        }
+    }
+
+    void ShowMainMenu()
+    {
+        startPanel.SetActive(true);
+        playerController.enabled = false;
+        echoController.enabled = false;
+
+        if (enemyController != null)
+        {
+            enemyController.enabled = false;
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void StartGame()
+    {
+        startPanel.SetActive(false);
+        playerController.enabled = true;
+        echoController.enabled = true;
+
+        if (enemyController != null)
+        {
+            enemyController.enabled = true;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     public void CollectCrystal()
     {
         collectedCrystals++;
         if (collectedCrystals >= totalCrystals)
         {
             OpenExit();
+            exitTrigger.SetActive(true);
         }
         Debug.Log("Collected Crystals: " + collectedCrystals + "/" + totalCrystals);
     }
@@ -45,13 +98,27 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        Debug.Log("You Win!");
-        // You can add additional logic here, such as loading the next level or displaying a victory message.
+        if (hasWon || gameOver)
+            return;
+
+        hasWon = true;
+        winPanel.SetActive(true);
+
+        playerController.enabled = false;
+        echoController.enabled = false;
+
+        if (enemyController != null)
+        {
+            enemyController.enabled = false;
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void GameOver()
     {
-        if (gameOver)
+        if (gameOver || hasWon)
           return;
         
         gameOver = true;
@@ -66,6 +133,18 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        skipMainMenu = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        skipMainMenu = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

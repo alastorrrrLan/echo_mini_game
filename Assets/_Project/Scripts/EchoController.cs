@@ -11,6 +11,9 @@ public class EchoController : MonoBehaviour
     public float pulseSpeed = 12f;
     public float cooldown = 1f;
 
+    [Header("Enemy Detection")]
+    [SerializeField] private EnemyController[] enemies;
+
     private float currentRadius = 0f;
     private bool isPulsing = false;
     private float lastPulseTime = -999f;
@@ -42,6 +45,14 @@ public class EchoController : MonoBehaviour
         lastPulseTime = Time.time;
         
         audioSource.PlayOneShot(echoClip);
+
+        foreach (EnemyController enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                enemy.HearEcho(transform.position);
+            }
+        }
     }
 
     void UpdatePulse()
